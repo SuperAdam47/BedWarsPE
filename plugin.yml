@@ -3,7 +3,7 @@ main: BedWars\BedWars
 version: 1.0
 api: 1.13.0
 load: STARTUP
-author: RAgnok123
+author: Ragnok123
 description: BedWars MiniGame
 commands:
  bw:
