@@ -1,0 +1,147 @@
+general:
+ teambalance: 1
+ limitteams: "auto"
+ language: "rus"
+buys:
+ - icon: 311
+   data:
+    - 30 298 0 1
+    - 30 300 0 1
+    - 30 301 0 1
+    - 60 303 0 1
+    - 90 307 0 1
+    - 120 311 0 1
+ - icon: 276
+   data:
+    - 50 283 0 1
+    - 75 267 0 1
+    - 400 280 0 1
+ - icon: 261
+   data:
+    - 200 261 0 1
+    - 5 262 0 1
+    - 80 262 0 16
+ - icon: 354
+   data:
+    - 16 320 0 2
+    - 50 297 0 10
+ - icon: 278
+   data:
+    - 50 257 0 1
+    - 100 278 0 1
+ - icon: 24
+   data:
+    - 30 24 0 32
+    - 60 24 0 64
+    - 90 24 0 96
+    - 35 20 0 32
+    - 70 20 0 64
+    - 105 20 0 96
+    - 60 121 0 32
+    - 120 121 0 64
+    - 180 121 0 96
+    - 30 65 0 16
+    - 60 65 0 32
+    - 120 65 0 64
+    - 180 65 0 96
+    - 40 30 0 1
+    - 20 50 0 16
+    - 40 50 0 32
+    - 80 50 0 64
+    - 25 89 0 16
+    - 50 89 0 32
+    - 100 89 0 64
+ - icon: 340
+   data:
+    - 400 332 0 1
+    - 250 341 0 1
+    - 50 37 0 1
+    - 100 38 0 1
+    - 50 54 0 1
+    - 250 44 4 1
+    - 350 96 0 1
+    - 80 345 0 1
+    - 500 46 0 1
+    - 150 259 0 1
+    - 80 346 0 1
+ - icon: 378
+   data:
+    - 200 260 0 60 1 21 60 4
+    - 300 260 0 90 1 21 90 4
+    - 100 366 0 2 1 10 60 2
+    - 200 366 0 3 1 10 60 3
+    - 80 391 0 60 1 8 60 5
+    - 120 391 0 90 1 8 90 5
+    - 80 328 0 60 1 1 60 2
+    - 120 328 0 90 1 1 90 2
+    - 1000 259 0 100 1 12 0 1
+lobby:
+ level: "bedwars_lobby"
+ spawn: 137 72 113
+ map_point: 137 72 113
+ time: 600
+ selmaptime: 30
+ selmapcount: 3
+spawners:
+ chest: true
+ title: true
+ frequency:
+  b: 30
+  i: 150
+  g: 300
+ gives:
+  b: 3
+  i: 10
+  g: 20
+teams:
+ names:
+  white: "Белые"
+  orange: "Оранжевые"
+  magenta: "Пурпурные"
+  lightBlue: "Светло-синие"
+  yellow: "Желтые"
+  lime: "Лаймовые"
+  pink: "Розовые"
+  gray: "Серые"
+  silver: "Серебристые"
+  cyan: "Голубые"
+  purple: "Фиолетовые"
+  blue: "Синие"
+  brown: "Коричневые"
+  green: "Зеленые"
+  red: "Красные"
+  black: "Черные"
+ colors:
+  white: "§f"
+  orange: "§2"
+  magenta: "§4"
+  lightBlue: "§9"
+  yellow: "§e"
+  lime: "§6"
+  pink: "§b"
+  gray: "§7"
+  silver: "§3"
+  cyan: "§5"
+  purple: "§d"
+  blue: "§1"
+  brown: "§8"
+  green: "§a"
+  red: "§c"
+  black: "§0"
+ data:
+  white: 0
+  orange: 1
+  magenta: 2
+  lightBlue: 3
+  yellow: 4
+  lime: 5
+  pink: 6
+  gray: 7
+  silver: 8
+  cyan: 9
+  purple: 10
+  blue: 11
+  brown: 12
+  green: 13
+  red: 14
+  black: 15

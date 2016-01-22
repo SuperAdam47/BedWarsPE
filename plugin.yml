@@ -1,0 +1,41 @@
+name: BedWars
+main: BedWars\BedWars
+version: 1.0.0
+api: 1.12.0
+load: STARTUP
+author: MrGenga
+description: BedWars MiniGame
+commands:
+ bw:
+  description: "BedWars!"
+  usage: "/bw"
+  permission: bw.tp
+ bwvote:
+  description: "Vote for start game now"
+  usage: "/bwvote"
+  permission: bw.vote
+ bwstart:
+  description: "Start the game now"
+  usage: "/bwstart"
+  permission: bw.start
+ bwstop:
+  description: "Stop the game"
+  usage: "/bwstop"
+  permission: bw.stop
+permissions:
+ bw:
+  default: false
+  description: "-"
+  children:
+   bw.tp:
+    default: true
+    description: "Allows to tp to game lobby"
+   bw.vote:
+    default: true
+    description: "Allows to vote for start the game now"
+   bw.start:
+    default: op
+    description: "Allows to start the game now"
+   bw.stop:
+    default: op
+    description: "Allows to stop the game"
