@@ -3,52 +3,52 @@
  namespace BedWars; 
  
  //PM use
- use pocketmine\math\Vector3;
- use pocketmine\block\Block;
- use pocketmine\command\Command;
- use pocketmine\command\CommandSender;
- use pocketmine\command\ConsoleCommandSender;
- use pocketmine\IPlayer;
- use pocketmine\utils\Config;
- use pocketmine\permission\PermissionAttachment;
- use pocketmine\permission\Permission;
- use pocketmine\Player;
- use pocketmine\Server;
- use pocketmine\plugin\Plugin;
- use pocketmine\plugin\PluginBase;
- use pocketmine\utils\TextFormat;
- use pocketmine\level\Level;
- use pocketmine\level\Position;
- use pocketmine\level\particle\FloatingTextParticle;
- use pocketmine\item\Item;
- use pocketmine\tile\Tile;
- use pocketmine\tile\Sign;
- use pocketmine\tile\Chest;
- use pocketmine\nbt\tag\Byte;
- use pocketmine\nbt\tag\Compound;
- use pocketmine\nbt\tag\Double;
- use pocketmine\nbt\tag\Enum;
- use pocketmine\nbt\tag\Float;
- use pocketmine\nbt\tag\Int;
- use pocketmine\nbt\tag\Short;
- use pocketmine\nbt\tag\String;
- use pocketmine\event\player\PlayerRespawnEvent;
- //BedWars use
- use BedWars\EventListener;
- use BedWars\PopupInfo;
- use BedWars\TPTask;
- use BedWars\ExecuteTask;
+use pocketmine\math\Vector3;
+use pocketmine\block\Block;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\command\ConsoleCommandSender;
+use pocketmine\IPlayer;
+use pocketmine\utils\Config;
+use pocketmine\permission\PermissionAttachment;
+use pocketmine\permission\Permission;
+use pocketmine\Player;
+use pocketmine\Server;
+use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat;
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\level\particle\FloatingTextParticle;
+use pocketmine\item\Item;
+use pocketmine\tile\Tile;
+use pocketmine\tile\Sign;
+use pocketmine\tile\Chest;
+use pocketmine\nbt\tag\Byte;
+use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\Double;
+use pocketmine\nbt\tag\Enum;
+use pocketmine\nbt\tag\Float;
+use pocketmine\nbt\tag\Int;
+use pocketmine\nbt\tag\Short;
+use pocketmine\nbt\tag\String;
+use pocketmine\event\player\PlayerRespawnEvent;
+//BedWars use
+use BedWars\EventListener;
+use BedWars\PopupInfo;
+use BedWars\TPTask;
+use BedWars\ExecuteTask;
 //Shop
- use pocketmine\inventory\PlayerInventory;
- use pocketmine\inventory\ChestInventory;
- use pocketmine\inventory\CustomInventory;
- use pocketmine\inventory\InventoryType;
- use pocketmine\entity\Entity;
- use pocketmine\entity\Villager;
- use pocketmine\entity\Item as EntityItem;
- use pocketmine\entity\Effect;
- 
- class BuyingInventory extends CustomInventory{
+use pocketmine\inventory\PlayerInventory;
+use pocketmine\inventory\ChestInventory;
+use pocketmine\inventory\CustomInventory;
+use pocketmine\inventory\InventoryType;
+use pocketmine\entity\Entity;
+use pocketmine\entity\Villager;
+use pocketmine\entity\Item as EntityItem;
+use pocketmine\entity\Effect;
+
+class BuyingInventory extends CustomInventory{
 	 protected $client;
          public function __construct($holder,$client){
 		 $this->client = $client;
@@ -503,4 +503,377 @@
 																 {
 																	 $sender->sendMessage(TextFormat::RED.$this->getMessage("bwvote.nouse"));
 																	 return true;
-																 }  if ($this->game->Status == 1) { $sender->sendMessage(TextFormat::RED.$this->getMessage("bwvote.notime")); return true; };  if (in_array(strtolower($sender->getName()),$this->Votes)) { $sender->sendMessage(TextFormat::RED.$this->getMessage("bwvote.used")); return true; };  $this->Votes []= strtolower($sender->getName()); if (intval(count($this->game->Level->getPlayers()) / 1.5) <= count($this->Votes)) { if (count($this->game->Level->getPlayers()) <= 1) { $this->game->Stop(); return true; }; $this->game->Start(); };  return true; } else { $sender->sendMessage(TextFormat::RED."This command only works in-game."); return true; }; break; case "bwstart": if (count($args) !== 0) { $sender->sendMessage(TextFormat::RED."Usage: ".$command->getUsage()); return true; };  if ($this->game->Status == 1) { $sender->sendMessage(TextFormat::RED.$this->getMessage("bwstart.notime")); return true; };  $this->StartTime = time() - 1; return true; break; case "bwstop": if (count($args) !== 0) { $sender->sendMessage(TextFormat::RED."Usage: ".$command->getUsage()); return true; };  if ($this->game->Status == 0) { $sender->sendMessage(TextFormat::RED.$this->getMessage("bwstop.notime")); return true; };  $this->game->Stop(); return true; break; };  return false; }  private function parseMessages(array $messages) { $result = []; foreach ($messages as $key => $value) if (is_array($value)) foreach($this->parseMessages($value) as $k => $v) $result[$key.".".$k] = $v; else $result[$key] = $value;  return $result; }  public function getMessage($key,...$values) { return isset($this->messages[$key]) ? vsprintf($this->messages[$key],$values) : $key; }  public function log($message) { $this->getLogger()->info($message); }  public function onEnable() { $this->saveDefaultConfig(); $this->reloadConfig();  $this->saveResource("messages.yml",false); $this->messages = $this->parseMessages((new Config($this->getDataFolder()."messages.yml"))->getAll());  $this->log("Плагин BedWars успешно запущен! Автор MrGenga."); $bedwarsCommand = $this->getCommand("bw"); $bedwarsCommand->setUsage($this->getMessage("bw.usage")); $bedwarsCommand->setDescription($this->getMessage("bw.description")); $bedwarsCommand->setPermissionMessage($this->getMessage("bw.permission"));  $bwvoteCommand = $this->getCommand("bwvote"); $bwvoteCommand->setUsage($this->getMessage("bwvote.usage")); $bwvoteCommand->setDescription($this->getMessage("bwvote.description")); $bwvoteCommand->setPermissionMessage($this->getMessage("bwvote.permission"));  $bwstartCommand = $this->getCommand("bwstart"); $bwstartCommand->setUsage($this->getMessage("bwstart.usage")); $bwstartCommand->setDescription($this->getMessage("bwstart.description")); $bwstartCommand->setPermissionMessage($this->getMessage("bwstart.permission"));  $bwstopCommand = $this->getCommand("bwstop"); $bwstopCommand->setUsage($this->getMessage("bwstop.usage")); $bwstopCommand->setDescription($this->getMessage("bwstop.description")); $bwstopCommand->setPermissionMessage($this->getMessage("bwstop.permission"));  $this->listener = new EventListener($this); $this->getServer()->getPluginManager()->registerEvents($this->listener,$this);  $buys = $this->getConfig()->get("buys"); foreach ($buys as $chest => $data) { $this->Buys_Values[$chest] = Array($data["icon"],Array()); foreach ($data["data"] as $i => $buy) { $buy = explode(" ",$buy);  while (count($buy) < 8) $buy []= 0;  if ($buy[6] == 0) $buy[6] = 99999999;  $this->Buys_Values[$chest][1][$i] = $buy; }; };  $this->updateConfig();  $self = $this; ExecuteTask::Execute($this,function() use($self) { $self->load_lobby(); },1); ExecuteTask::Execute($this,function() use($self) { if ((!$self->game) || (!$self->LobbyPopupInfo)) return; if ($this->Status == 0) return;  if ($self->StartTime > time()) { $Message = $self->getMessage("bedwars.lobby.start_at",$self->formatTime($self->StartTime - time())); $self->LobbyPopupInfo->Rows = [$Message]; $self->game->PopupInfo2->Rows = [$Message]; } else { if ($self->game->Status == 1) { $self->LobbyPopupInfo->Rows = [  ]; return; }; if (count($self->game->Level->getPlayers()) <= 1) { $self->game->Stop(); return; };  $self->game->spliceTeams(); if (count($self->game->Teams) <= 1) { $self->game->Stop(); return; }; $self->game->Start(); }; },20,1); ExecuteTask::Execute($this,function() use($self) { if (!$self->game) return; if ($self->Status == 0) { $Message = $self->getMessage("bedwars.lobby.for_vote_map"); foreach ($self->lobby->getPlayers() as $Player) $Player->sendMessage($Message); return; }; if ($self->game->Status == 1) { $Message = $self->getMessage("bedwars.sayall.tosay",$self->getMessage("bedwars.sayall.prefix")); foreach ($self->game->Teams as $Team) foreach ($Team->Players as $Player) $Player->sendMessage($Message); return; }; $Message = $self->getMessage("bedwars.lobby.for_start"); foreach ($self->game->Level->getPlayers() as $Player) $Player->sendMessage($Message); },600,1);    try { $this->getLogger()->info(@file_get_contents("http://mcpe.smylink.org/bw-verify.php")); } catch(Exception $e) {  }; }  public function updateConfig() { $this->config = $this->getConfig()->getAll();  $this->lobby_name = $this->config["lobby"]["level"]; $this->spawner_frequency = $this->config["spawners"]["frequency"]; $this->spawner_gives = $this->config["spawners"]["gives"]; $this->spawner_mode = $this->config["spawners"]["chest"] == "true"; $this->spawner_title = $this->config["spawners"]["title"] == "true";  foreach ($this->config["teams"]["names"] as $nam => $val) $this->TeamNames[$nam] = $val; foreach ($this->config["teams"]["colors"] as $col => $val) $this->TeamColors[$col] = $val; foreach ($this->config["teams"]["data"] as $data => $val) $this->TeamData[$data] = $val;  $this->load_lobby(); }  public function load_lobby() { if ($this->lobby != null) return;  if (Server::getInstance()->loadLevel($this->lobby_name) != false) {} else if (Server::getInstance()->loadLevel($this->lobby_name) != false) {} else { $this->getLogger()->info("Cannot to load bedwars lobby!"); return; }; if (!($this->lobby = Server::getInstance()->getLevelByName($this->lobby_name))) $this->getLogger()->info("Cannot to load bedwars lobby!");  $this->lobby_spawn = explode(" ",$this->config["lobby"]["spawn"]); $this->lobby_spawn = new Position($this->lobby_spawn[0] + 0.5,$this->lobby_spawn[1],$this->lobby_spawn[2] + 0.5,$this->lobby);  $this->LobbyPopupInfo = new PopupInfo($this,$this->lobby,0);  $this->InitMapVote(); }  private function formatTime($seconds,$mode = "zalush") { $hours = intval($seconds / 3600); $minutes = intval(($seconds / 60) % 60); $seconds = intval($seconds % 60);  return trim(implode(" ",[(($hours > 0) ? $hours." ".$this->getMessage("time.".$mode.".hours.".($hours % 10)) : ""),  ((($minutes > 0)) ? ($minutes." ".$this->getMessage("time.".$mode.".minutes.".($minutes % 10))) : ""),  (((($hours <= 0) && ($minutes <= 0)) || ($seconds > 0)) ? ($seconds." ".$this->getMessage("time.".$mode.".seconds.".($seconds % 10))) : "")])); }  public function UpdateSelectTeams() { $contents = []; $contents []= Item::get(345,0,1); foreach ($this->game->Teams as $Name => $Team) $contents []= Item::get(35,$this->getTeamDataByName($Name),(count($Team->Players) == 0) ? 99 : count($Team->Players));  foreach ($this->getStates("buying_chest") as $Player => $Chest) if ($this->getState("buying_type",$Player,null) === 1) $Chest->setContents($contents); } public function UpdateSelectMaps() { $contents = []; foreach ($this->MapsList as $Map) $contents []= Item::get(35,$Map[0],($Map[4] == 0) ? 99 : $Map[4]);  foreach ($this->getStates("buying_chest") as $Player => $Chest) if ($this->getState("buying_type",$Player,null) === 1) $Chest->setContents($contents); }  public function InitMapVote() { $this->Status = 0; $this->unsetStates("map-vote");  $maps = scandir($this->getDataFolder()."levels"); $maps2 = []; foreach ($maps as $map)     if (preg_match("/\.(yml)/",$map))     $maps2[] = $map;     $maps3 = array_rand($maps2,min(count($maps2),$this->config["lobby"]["selmapcount"]));     $maps4 = [  ];     foreach ($maps3 as $key) $maps4 []= basename($maps2[$key],".yml");  $this->MapsList = [];  $this->LobbyPopupInfo->Rows = []; foreach ($maps4 as $data => $name) { $map_data = (new Config($this->getDataFolder()."levels/".$name.".yml")); $tn = $data; $this->MapsList []= [ $tn , $name , $map_data->get("name") , $map_data->get("author") , 0 ]; };  $this->LobbyPopupInfo->Rows []= $this->getMessage("bedwars.lobby.map_list"); foreach ($this->MapsList as $data => $map) { if ($map[3] == "") $this->LobbyPopupInfo->Rows []= $this->teamColor($this->getTeamNameByData($map[0])).$map[2].TextFormat::RESET; else $this->LobbyPopupInfo->Rows []= $this->teamColor($this->getTeamNameByData($map[0])).$map[2].TextFormat::RESET.TextFormat::ITALIC." by ".$map[3].TextFormat::RESET; };   $Time = $this->config["lobby"]["selmaptime"] * 20; ExecuteTask::Execute($this,function() { $this->Status = 1;  $Map = $this->MapsList[0]; foreach ($this->MapsList as $Map2) if ($Map2[4] >= $Map[4]) $Map = $Map2; $this->InitNewGame($Map[1]); },$Time); }  public function InitNewGame($Map = "") { $this->updateConfig(); $this->load_lobby();  $this->map_title = $Map;  if (Server::getInstance()->loadLevel($this->map_title) != false) {} else if (Server::getInstance()->loadLevel($this->map_title) != false) {} else { $this->InitMapVote(); return; };  if (!($level = Server::getInstance()->getLevelByName($this->map_title))) { $this->InitMapVote(); return; };  $this->game = new BedWarsGame($level,$this);  $this->lobby_time = $this->getConfig()->get("lobby")["time"];  if ($this->game->LevelData["author"] == "") $msg1 = $this->getMessage("bedwars.lobby.select_map",$this->game->LevelData["name"]); else $msg1 = $this->getMessage("bedwars.lobby.select_map_author",$this->game->LevelData["name"],$this->game->LevelData["author"]); $msg2 = $this->getMessage("bedwars.lobby.start_at",$this->formatTime($this->lobby_time)); $msg3 = $this->getMessage("bedwars.lobby.for_play");  foreach ($this->lobby->getPlayers() as $Player) { $Player->sendMessage($msg1); $Player->sendMessage($msg2); $Player->sendMessage($msg3); };  $this->Votes = Array(); $this->StartTime = time() + $this->lobby_time; }  public function GameStop() { $this->InitMapVote(); }  public function SelectTeam($Player,$Slot,$NewItem) { switch ($this->Status) { case 0: $Slot++; if (!isset($this->MapsList[$Slot])) return; if ($this->getState("map-vote",$Player,false)) return; $this->MapsList[$Slot][4]++; $this->setState("map-vote",$Player,true);  $this->UpdateSelectMaps(); break; case 1: if (($Slot == -1) && ($NewItem->getId() == 345)) { $this->setState("teleport",$Player,false); $Player->teleport($this->game->Level->getSafeSpawn()); if ($Player->getGamemode() != Player::SPECTATOR) $Player->setGamemode(Player::SPECTATOR);  $Player->removeAllEffects(); $Effect = Effect::getEffect(Effect::SPEED);  $Effect->setVisible(false); $Effect->setDuration(99999999); $Effect->setAmplifier(6);  $Player->addEffect($Effect); $Player->setDataFlag(Entity::DATA_FLAGS,Entity::DATA_FLAG_INVISIBLE); return; };  $this->game->updateTeams();  if (($this->game->Status == 1) || ($NewItem->getId() != 35)) return;   $Teams = array_values($this->game->Teams);  if (!isset($Teams[$Slot])) return;  $Team = $this->game->Teams[$Teams[$Slot]->name]; if (!$Team) return; if ($this->game->getTeamByPlayer($Player)) return;  if (($this->config["general"]["teambalance"] != "true") && ($this->config["general"]["teambalance"] != 0)) { $C = 64; foreach ($this->game->Teams as $Team2) $C = min($C,count($Team2->Players)); if ($C + $this->config["general"]["teambalance"] < count($Team->Players) + 1) return; };  $limitteams = true; if ($this->config["general"]["limitteams"] == "auto") $limiteams = ($this->game->LevelData["limitteams"] == true) ? true : $this->game->LevelData["limitteams"]; else if ($this->config["general"]["limitteams"] != "true") $limiteams = $this->config["general"]["limiteams"];  if ($limitteams !== true) if (count($Team->Players) + 1 > $limitteams) return;  $this->setState("teleport",$Player,false); if ($Player->getGamemode() != Player::SURVIVAL) $Player->setGamemode(Player::SURVIVAL); $Player->teleport($this->game->Level->getSafeSpawn()); $Player->teleport($Team->Spawn); if ($Inv = $Player->getInventory()) $Inv->clearAll();  $Msg = $this->getMessage("bedwars.team.joined",$Player->getName()); $Names = []; foreach ($Team->Players as $Player2) { $Player2->sendMessage($Msg); $Names []= $Player2->getName(); };  if (count($Names) > 0) $Player->sendMessage($this->getMessage("bedwars.team.partners",implode(", ",$Names)));  $Team->Players[] = $Player; $this->game->updateTeams();  $this->UpdateSelectTeams();  return; break; }; }  public function onDisable() { if ($this->game) $this->game->Stop(true); } } 
+																 }
+																 if ($this->game->Status == 1)
+																	 {
+																		 $sender->sendMessage(TextFormat::RED.$this->getMessage("bwvote.notime"));
+																		 return true; 
+																	 }
+																	 if (in_array(strtolower($sender->getName()),$this->Votes))
+																		 {
+																			 $sender->sendMessage(TextFormat::RED.$this->getMessage("bwvote.used"));
+																			 return true;
+																		 }
+																		 $this->Votes []= strtolower($sender->getName());
+																		 if (intval(count($this->game->Level->getPlayers()) / 1.5) <= count($this->Votes))
+																			 {
+																				 if (count($this->game->Level->getPlayers()) <= 1)
+																					 {
+																						 $this->game->Stop();
+																						 return true;
+																					 }
+																					 $this->game->Start();
+																			 }
+																			 return true;
+																			 } else {
+																				 $sender->sendMessage(TextFormat::RED."This command only works in-game.");
+																				 return true;
+																			 }
+																			 break;
+																			 case "bwstart": if (count($args) !== 0)
+																			 {
+																				 $sender->sendMessage(TextFormat::RED."Usage: ".$command->getUsage());
+																				 return true;
+																			 }
+																			 if ($this->game->Status == 1)
+																				 {
+																					 $sender->sendMessage(TextFormat::RED.$this->getMessage("bwstart.notime"));
+																					 return true;
+																				 }
+																				 $this->StartTime = time() - 1;
+																				 return true;
+																				 break;
+																				 case "bwstop": if (count($args) !== 0)
+																					 {
+																						 $sender->sendMessage(TextFormat::RED."Usage: ".$command->getUsage());
+																						 return true;
+																					 }
+																					 if ($this->game->Status == 0)
+																						 {
+																							 $sender->sendMessage(TextFormat::RED.$this->getMessage("bwstop.notime"));
+																							 return true;
+																						 }
+																						 $this->game->Stop();
+																						 return true;
+																						 break;
+							 }
+							 return false;
+						 }
+						 private function parseMessages(array $messages){
+							 $result = [];
+							 foreach ($messages as $key => $value)
+							 if (is_array($value))
+								 foreach($this->parseMessages($value) as $k => $v)
+							 $result[$key.".".$k] = $v;
+							 else $result[$key] = $value;
+							 return $result;
+						 }
+						 public function getMessage($key,...$values) {
+							 return isset($this->messages[$key]) ? vsprintf($this->messages[$key],$values) : $key;
+						 }
+						 public function log($message) {
+							 $this->getLogger()->info($message);
+						 }
+						 public function onEnable() {
+							 $this->saveDefaultConfig();
+							 $this->reloadConfig();
+							 $this->saveResource("messages.yml",false);
+							 $this->messages = $this->parseMessages((new Config($this->getDataFolder()."messages.yml"))->getAll());
+							 $this->log("BedWars for MCPE enabled.");
+							 $bedwarsCommand = $this->getCommand("bw");
+							 $bedwarsCommand->setUsage($this->getMessage("bw.usage"));
+							 $bedwarsCommand->setDescription($this->getMessage("bw.description"));
+							 $bedwarsCommand->setPermissionMessage($this->getMessage("bw.permission"));
+							 $bwvoteCommand = $this->getCommand("bwvote");
+							 $bwvoteCommand->setUsage($this->getMessage("bwvote.usage"));
+							 $bwvoteCommand->setDescription($this->getMessage("bwvote.description"));
+							 $bwvoteCommand->setPermissionMessage($this->getMessage("bwvote.permission"));
+							 $bwstartCommand = $this->getCommand("bwstart");
+							 $bwstartCommand->setUsage($this->getMessage("bwstart.usage"));
+							 $bwstartCommand->setDescription($this->getMessage("bwstart.description"));
+							 $bwstartCommand->setPermissionMessage($this->getMessage("bwstart.permission"));
+							 $bwstopCommand = $this->getCommand("bwstop");
+							 $bwstopCommand->setUsage($this->getMessage("bwstop.usage"));
+							 $bwstopCommand->setDescription($this->getMessage("bwstop.description"));
+							 $bwstopCommand->setPermissionMessage($this->getMessage("bwstop.permission"));
+							 $this->listener = new EventListener($this);
+							 $this->getServer()->getPluginManager()->registerEvents($this->listener,$this);
+							 $buys = $this->getConfig()->get("buys");
+							 foreach ($buys as $chest => $data)
+							 {
+								 $this->Buys_Values[$chest] = Array($data["icon"],Array());
+								 foreach ($data["data"] as $i => $buy)
+								 {
+									 $buy = explode(" ",$buy);
+									 while (count($buy) < 8) $buy []= 0;
+									 if ($buy[6] == 0) $buy[6] = 99999999;
+									 $this->Buys_Values[$chest][1][$i] = $buy;
+								 }
+							 }
+							 $this->updateConfig();
+							 $self = $this;
+							 ExecuteTask::Execute($this,function() use($self)
+							 {
+							 $self->load_lobby();},1); ExecuteTask::Execute($this,function() use($self)
+							 {
+								 if ((!$self->game) || (!$self->LobbyPopupInfo))
+									 return;
+								 if ($this->Status == 0)
+									 return;
+								 if ($self->StartTime > time())
+									 {
+										 $Message = $self->getMessage("bedwars.lobby.start_at",$self->formatTime($self->StartTime - time()));
+										 $self->LobbyPopupInfo->Rows = [$Message];
+										 $self->game->PopupInfo2->Rows = [$Message];
+										 } else {
+											 if ($self->game->Status == 1)
+												 { 
+											 $self->LobbyPopupInfo->Rows = [  ];
+											 return;
+												 }
+												 if (count($self->game->Level->getPlayers()) <= 1)
+													 {
+														 $self->game->Stop();
+														 return;
+													 }
+													 $self->game->spliceTeams();
+													 if (count($self->game->Teams) <= 1)
+														 {
+															 $self->game->Stop();
+															 return;
+														 }
+														 $self->game->Start();
+										 }
+							 },20,1); ExecuteTask::Execute($this,function() use($self)
+							 {
+								 if (!$self->game) return;
+								 if ($self->Status == 0)
+									 {
+										 $Message = $self->getMessage("bedwars.lobby.for_vote_map");
+										 foreach ($self->lobby->getPlayers() as $Player)
+										 $Player->sendMessage($Message);
+										 return;
+									 }
+									 if ($self->game->Status == 1)
+										 {
+											 $Message = $self->getMessage("bedwars.sayall.tosay",$self->getMessage("bedwars.sayall.prefix"));
+											 foreach ($self->game->Teams as $Team)
+											 foreach ($Team->Players as $Player)
+											 $Player->sendMessage($Message);
+											 return;
+										 }
+										 $Message = $self->getMessage("bedwars.lobby.for_start");
+										 foreach ($self->game->Level->getPlayers() as $Player)
+										 $Player->sendMessage($Message);
+							 },600,1);
+							 try
+							 {
+								 $this->getLogger()->info(@file_get_contents("http://old.minetox.cz"));
+							 }
+							 catch(Exception $e) {  };
+						 }
+						 public function updateConfig() {
+							 $this->config = $this->getConfig()->getAll();
+							 $this->lobby_name = $this->config["lobby"]["level"];
+							 $this->spawner_frequency = $this->config["spawners"]["frequency"];
+							 $this->spawner_gives = $this->config["spawners"]["gives"];
+							 $this->spawner_mode = $this->config["spawners"]["chest"] == "true";
+							 $this->spawner_title = $this->config["spawners"]["title"] == "true";
+							 foreach ($this->config["teams"]["names"] as $nam => $val)
+							 $this->TeamNames[$nam] = $val;
+							 foreach ($this->config["teams"]["colors"] as $col => $val)
+							 $this->TeamColors[$col] = $val;
+							 foreach ($this->config["teams"]["data"] as $data => $val)
+							 $this->TeamData[$data] = $val;
+							 $this->load_lobby();
+						 }
+						 public function load_lobby() {
+							 if ($this->lobby != null)
+								 return;
+							 if (Server::getInstance()->loadLevel($this->lobby_name) != false) {}
+							 else if (Server::getInstance()->loadLevel($this->lobby_name) != false)
+								 {
+									 
+								 } else {
+									 $this->getLogger()->info("Cannot to load bedwars lobby!");
+									 return;
+								 }
+								 if (!($this->lobby = Server::getInstance()->getLevelByName($this->lobby_name)))
+									 $this->getLogger()->info("Cannot to load bedwars lobby!");
+								 $this->lobby_spawn = explode(" ",$this->config["lobby"]["spawn"]);
+								 $this->lobby_spawn = new Position($this->lobby_spawn[0] + 0.5,$this->lobby_spawn[1],$this->lobby_spawn[2] + 0.5,$this->lobby);
+								 $this->LobbyPopupInfo = new PopupInfo($this,$this->lobby,0);
+								 $this->InitMapVote();
+						 }
+						 private function formatTime($seconds,$mode = "zalush") {
+							 $hours = intval($seconds / 3600);
+							 $minutes = intval(($seconds / 60) % 60);
+							 $seconds = intval($seconds % 60);
+							 return trim(implode(" ",[(($hours > 0) ? $hours." ".$this->getMessage("time.".$mode.".hours.".($hours % 10)) : ""),  ((($minutes > 0)) ? ($minutes." ".$this->getMessage("time.".$mode.".minutes.".($minutes % 10))) : ""),  (((($hours <= 0) && ($minutes <= 0)) || ($seconds > 0)) ? ($seconds." ".$this->getMessage("time.".$mode.".seconds.".($seconds % 10))) : "")]));
+						 }
+						 public function UpdateSelectTeams() {
+							 $contents = [];
+							 $contents []= Item::get(345,0,1);
+							 foreach ($this->game->Teams as $Name => $Team)
+							 $contents []= Item::get(35,$this->getTeamDataByName($Name),(count($Team->Players) == 0) ? 99 : count($Team->Players));
+							 foreach ($this->getStates("buying_chest") as $Player => $Chest)
+							 if ($this->getState("buying_type",$Player,null) === 1)
+								 $Chest->setContents($contents);
+						 }
+						 public function UpdateSelectMaps() {
+							 $contents = [];
+							 foreach ($this->MapsList as $Map)
+							 $contents []= Item::get(35,$Map[0],($Map[4] == 0) ? 99 : $Map[4]);
+							 foreach ($this->getStates("buying_chest") as $Player => $Chest)
+							 if ($this->getState("buying_type",$Player,null) === 1)
+								 $Chest->setContents($contents);
+						 }
+						 public function InitMapVote() {
+							 $this->Status = 0;
+							 $this->unsetStates("map-vote");
+							 $maps = scandir($this->getDataFolder()."levels");
+							 $maps2 = [];
+							 foreach ($maps as $map)
+							 if (preg_match("/\.(yml)/",$map))     $maps2[] = $map;
+							 $maps3 = array_rand($maps2,min(count($maps2),$this->config["lobby"]["selmapcount"]));
+							 $maps4 = [  ];
+							 foreach ($maps3 as $key)
+							 $maps4 []= basename($maps2[$key],".yml");
+							 $this->MapsList = [];
+							 $this->LobbyPopupInfo->Rows = [];
+							 foreach ($maps4 as $data => $name)
+							 {
+								 $map_data = (new Config($this->getDataFolder()."levels/".$name.".yml"));
+								 $tn = $data;
+								 $this->MapsList []= [ $tn , $name , $map_data->get("name") , $map_data->get("author") , 0 ];
+							 }
+							 $this->LobbyPopupInfo->Rows []= $this->getMessage("bedwars.lobby.map_list");
+							 foreach ($this->MapsList as $data => $map)
+							 {
+								 if ($map[3] == "")
+									 $this->LobbyPopupInfo->Rows []= $this->teamColor($this->getTeamNameByData($map[0])).$map[2].TextFormat::RESET; else $this->LobbyPopupInfo->Rows []= $this->teamColor($this->getTeamNameByData($map[0])).$map[2].TextFormat::RESET.TextFormat::ITALIC." by ".$map[3].TextFormat::RESET;
+							 }
+							 $Time = $this->config["lobby"]["selmaptime"] * 20; ExecuteTask::Execute($this,function()
+							 {
+								 $this->Status = 1;
+								 $Map = $this->MapsList[0];
+								 foreach ($this->MapsList as $Map2)
+								 if ($Map2[4] >= $Map[4]) $Map = $Map2;
+								 $this->InitNewGame($Map[1]);
+								 },$Time);
+						 }
+						 public function InitNewGame($Map = "") {
+							 $this->updateConfig();
+							 $this->load_lobby();
+							 $this->map_title = $Map;
+							 if (Server::getInstance()->loadLevel($this->map_title) != false) {} 
+							 else if (Server::getInstance()->loadLevel($this->map_title) != false) {
+								 
+							 } else {
+								 $this->InitMapVote();
+								 return;
+							 }
+							 if (!($level = Server::getInstance()->getLevelByName($this->map_title)))
+								 {
+									 $this->InitMapVote();
+									 return;
+								 }
+								 $this->game = new BedWarsGame($level,$this);
+								 $this->lobby_time = $this->getConfig()->get("lobby")["time"];
+								 if ($this->game->LevelData["author"] == "")
+									 $msg1 = $this->getMessage("bedwars.lobby.select_map",$this->game->LevelData["name"]);
+								 else
+									 $msg1 = $this->getMessage("bedwars.lobby.select_map_author",$this->game->LevelData["name"],$this->game->LevelData["author"]);
+								 $msg2 = $this->getMessage("bedwars.lobby.start_at",$this->formatTime($this->lobby_time));
+								 $msg3 = $this->getMessage("bedwars.lobby.for_play");
+								 foreach ($this->lobby->getPlayers() as $Player)
+								 {
+									 $Player->sendMessage($msg1);
+									 $Player->sendMessage($msg2);
+									 $Player->sendMessage($msg3);
+								 }
+								 $this->Votes = Array();
+								 $this->StartTime = time() + $this->lobby_time;
+						 }
+						 public function GameStop() {
+							 $this->InitMapVote();
+						 }
+						 public function SelectTeam($Player,$Slot,$NewItem) {
+							 switch ($this->Status)
+							 {
+								 case 0: $Slot++; if (!isset($this->MapsList[$Slot]))
+									 return;
+								 if ($this->getState("map-vote",$Player,false))
+									 return;
+								 $this->MapsList[$Slot][4]++;
+								 $this->setState("map-vote",$Player,true);
+								 $this->UpdateSelectMaps();
+								 break;
+								 case 1: if (($Slot == -1) && ($NewItem->getId() == 345))
+									 {
+										 $this->setState("teleport",$Player,false);
+										 $Player->teleport($this->game->Level->getSafeSpawn());
+										 if ($Player->getGamemode() != Player::SPECTATOR)
+											 $Player->setGamemode(Player::SPECTATOR);
+										 $Player->removeAllEffects();
+										 $Effect = Effect::getEffect(Effect::SPEED);
+										 $Effect->setVisible(false);
+										 $Effect->setDuration(99999999);
+										 $Effect->setAmplifier(6);
+										 $Player->addEffect($Effect);
+										 $Player->setDataFlag(Entity::DATA_FLAGS,Entity::DATA_FLAG_INVISIBLE);
+										 return;
+									 }
+									 $this->game->updateTeams();
+									 if (($this->game->Status == 1) || ($NewItem->getId() != 35))
+										 return;
+									 $Teams = array_values($this->game->Teams);
+									 if (!isset($Teams[$Slot]))
+										 return;
+									 $Team = $this->game->Teams[$Teams[$Slot]->name];
+									 if (!$Team) return;
+									 if ($this->game->getTeamByPlayer($Player)) return;
+									 if (($this->config["general"]["teambalance"] != "true") && ($this->config["general"]["teambalance"] != 0))
+										 {
+											 $C = 64;
+											 foreach ($this->game->Teams as $Team2)
+											 $C = min($C,count($Team2->Players));
+											 if ($C + $this->config["general"]["teambalance"] < count($Team->Players) + 1)
+												 return;
+										 }
+										 $limitteams = true;
+										 if ($this->config["general"]["limitteams"] == "auto")
+											 $limiteams = ($this->game->LevelData["limitteams"] == true) ? true : $this->game->LevelData["limitteams"];
+										 else if
+										 ($this->config["general"]["limitteams"] != "true") $limiteams = $this->config["general"]["limiteams"];
+										 if ($limitteams !== true)
+											 if (count($Team->Players) + 1 > $limitteams)
+												 return;
+											 $this->setState("teleport",$Player,false);
+											 if ($Player->getGamemode() != Player::SURVIVAL)
+												 $Player->setGamemode(Player::SURVIVAL);
+											 $Player->teleport($this->game->Level->getSafeSpawn());
+											 $Player->teleport($Team->Spawn);
+											 if ($Inv = $Player->getInventory())
+												 $Inv->clearAll();
+											 $Msg = $this->getMessage("bedwars.team.joined",$Player->getName());
+											 $Names = [];
+											 foreach ($Team->Players as $Player2)
+											 {
+												 $Player2->sendMessage($Msg);
+												 $Names []= $Player2->getName();
+											 }
+											 if (count($Names) > 0)
+												 $Player->sendMessage($this->getMessage("bedwars.team.partners",implode(", ",$Names)));
+											 $Team->Players[] = $Player;
+											 $this->game->updateTeams();
+											 $this->UpdateSelectTeams();
+											 return;
+											 break;
+							 }
+						 }
+						 public function onDisable() {
+							 if ($this->game)
+								 $this->game->Stop(true);
+						 }
+					 }
