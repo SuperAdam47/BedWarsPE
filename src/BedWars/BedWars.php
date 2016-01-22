@@ -38,7 +38,7 @@ use BedWars\EventListener;
 use BedWars\PopupInfo;
 use BedWars\TPTask;
 use BedWars\ExecuteTask;
-//Shop
+//Tools for shopping
 use pocketmine\inventory\PlayerInventory;
 use pocketmine\inventory\ChestInventory;
 use pocketmine\inventory\CustomInventory;
