@@ -20,7 +20,7 @@ use pocketmine\nbt\tag\Byte;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Double;
 use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Float
+use pocketmine\nbt\tag\Float;
 use pocketmine\nbt\tag\Int; 
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String; 
@@ -139,8 +139,8 @@ class EventListener implements Listener {
 		$Player = $event->getPlayer();
 		$Level = $Player->getLevel();
 		if ((!$this->plugin->game) || ($this->plugin->game->level_name != $Level->getFolderName()))
-			return;
-		if $Player->getGamemode() == Player::SPECTATOR)
+		return;
+		if ($Player->getGamemode() == Player::SPECTATOR)
 		return;
 		$event->setCancelled($this->plugin->game->PlayerMove($event->getPlayer(),$event->getFrom(),$event->getTo()));
 		$X = $Player->getFloorX();
