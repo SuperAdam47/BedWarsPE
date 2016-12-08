@@ -1,0 +1,89 @@
+time: 
+zalush: 
+seconds: 
+0: "秒" 
+1: "秒" 
+2: "秒" 
+3: "秒"
+4: "秒" 
+5: "秒" 
+6: "秒" 
+7: "秒" 
+8: "秒" 
+9: "秒" 
+minutes: 
+0: "分" 
+1: "分" 
+2: "分" 
+3: "分" 
+4: "分" 
+5: "分" 
+6: "分" 
+7: "分" 
+8: "分" 
+9: "分" 
+hours: 
+0: "时" 
+1: "时" 
+2: "时" 
+3: "时" 
+4: "时" 
+5: "时" 
+6: "时" 
+7: "时" 
+8: "时" 
+9: "时" 
+bedwars: 
+lobby: 
+select_map: "Map %s" 
+select_map_author: "Map %s. Map author - %s" 
+start_at: "Game starts at %s" 
+for_play: "For playingyou must choose team. To choose, please, tap on villager" 
+for_start: "For playing now type in chat: /bwvote" 
+for_vote_map: "For choosing a map tap again on villager" 
+map_list: "Maps:" 
+start: 
+info: "Game started!" 
+stop: 
+48loose: "You lost!" 
+49  team: 
+50   destroyed: "Bed of team %s destroyed!" 
+51   terminated: "Team %s destroyed!" 
+52   win: "Team %s won!" 
+53   joined: "%s joined your team" 
+54   quited: "%s leaved your team" 
+55   partners: "Players of your team: %s" 
+56  buy: 
+57   inv_full: "Your inventory is full!" 
+58   no_money: "You dont have money" 
+59   shop: "Villager" 
+60  spawner: 
+61   title: 
+62    b: "Bronze" 
+63    i: "Iron" 
+64    g: "Gold" 
+65  sayall: 
+66   prefix: "*" 
+67   tosay: "In game is team chat. If you want say public, type before message %s." 
+68 bw: 
+69  usage: "/bw" 
+70  description: "Teleports you to lobby" 
+71  permission: "You dont have permission" 
+72  nouse: "You cant here!" 
+73 bwvote: 
+74  usage: "/bwvote" 
+75  description: "Vote for force start" 
+76  permission: "You dont have permission" 
+77  used: "You already voted!" 
+78  nouse: "You cant here!" 
+79  notime: "Game already running!" 
+80 bwstart: 
+81  usage: "/bwstart" 
+82  description: "Starts game now" 
+83  permission: "You cant non-op" 
+84  notime: "Already running!" 
+85 bwstop: 
+86  usage: "/bwstop" 
+87  description: "Stop" 
+88  permission: "You cant non-op" 
+89  notime: "Game sucesfull stopped!" 
