@@ -35,8 +35,8 @@ hours:
 9: "时" 
 bedwars: 
 lobby: 
-select_map: "Map %s" 
-select_map_author: "Map %s. Map author - %s" 
+select_map: "地图: %s" 
+select_map_author: "地图: %s.  - %s" 
 start_at: "Game starts at %s" 
 for_play: "For playingyou must choose team. To choose, please, tap on villager" 
 for_start: "For playing now type in chat: /bwvote" 
@@ -45,45 +45,45 @@ map_list: "Maps:"
 start: 
 info: "Game started!" 
 stop: 
-48loose: "You lost!" 
-49  team: 
-50   destroyed: "Bed of team %s destroyed!" 
-51   terminated: "Team %s destroyed!" 
-52   win: "Team %s won!" 
-53   joined: "%s joined your team" 
-54   quited: "%s leaved your team" 
-55   partners: "Players of your team: %s" 
-56  buy: 
-57   inv_full: "Your inventory is full!" 
-58   no_money: "You dont have money" 
-59   shop: "Villager" 
-60  spawner: 
-61   title: 
-62    b: "Bronze" 
-63    i: "Iron" 
-64    g: "Gold" 
-65  sayall: 
-66   prefix: "*" 
-67   tosay: "In game is team chat. If you want say public, type before message %s." 
-68 bw: 
-69  usage: "/bw" 
-70  description: "Teleports you to lobby" 
-71  permission: "You dont have permission" 
-72  nouse: "You cant here!" 
-73 bwvote: 
-74  usage: "/bwvote" 
-75  description: "Vote for force start" 
-76  permission: "You dont have permission" 
-77  used: "You already voted!" 
-78  nouse: "You cant here!" 
-79  notime: "Game already running!" 
-80 bwstart: 
-81  usage: "/bwstart" 
-82  description: "Starts game now" 
-83  permission: "You cant non-op" 
-84  notime: "Already running!" 
-85 bwstop: 
-86  usage: "/bwstop" 
-87  description: "Stop" 
-88  permission: "You cant non-op" 
-89  notime: "Game sucesfull stopped!" 
+loose: "You lost!" 
+team: 
+destroyed: "Bed of team %s destroyed!" 
+terminated: "Team %s destroyed!" 
+win: "Team %s won!" 
+joined: "%s joined your team" 
+quited: "%s leaved your team" 
+partners: "Players of your team: %s" 
+buy: 
+inv_full: "Your inventory is full!" 
+no_money: "You dont have money" 
+shop: "Villager" 
+spawner: 
+title: 
+b: "Bronze" 
+i: "Iron" 
+g: "Gold" 
+sayall: 
+prefix: "*" 
+tosay: "In game is team chat. If you want say public, type before message %s." 
+bw: 
+usage: "/bw" 
+description: "Teleports you to lobby" 
+permission: "You dont have permission" 
+nouse: "You cant here!" 
+bwvote: 
+usage: "/bwvote" 
+description: "Vote for force start" 
+permission: "You dont have permission" 
+used: "You already voted!" 
+nouse: "You cant here!" 
+notime: "Game already running!" 
+bwstart: 
+usage: "/bwstart" 
+description: "Starts game now" 
+permission: "You cant non-op" 
+notime: "Already running!" 
+bwstop: 
+usage: "/bwstop" 
+description: "Stop" 
+permission: "You cant non-op" 
+notime: "Game sucesfull stopped!" 
