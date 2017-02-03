@@ -1,0 +1,89 @@
+time: 
+zalush: 
+seconds: 
+0: "秒" 
+1: "秒" 
+2: "秒" 
+3: "秒"
+4: "秒" 
+5: "秒" 
+6: "秒" 
+7: "秒" 
+8: "秒" 
+9: "秒" 
+minutes: 
+0: "分" 
+1: "分" 
+2: "分" 
+3: "分" 
+4: "分" 
+5: "分" 
+6: "分" 
+7: "分" 
+8: "分" 
+9: "分" 
+hours: 
+0: "时" 
+1: "时" 
+2: "时" 
+3: "时" 
+4: "时" 
+5: "时" 
+6: "时" 
+7: "时" 
+8: "时" 
+9: "时" 
+bedwars: 
+lobby: 
+select_map: "地图: %s" 
+select_map_author: "地图: %s. 作者 - %s" 
+start_at: "游戏开始于 %s" 
+for_play: "为了玩游戏，你必须选择团队. 要选择，请点击村民" 
+for_start: "为了玩这个游戏，现在输入命令在聊天室: /bwvote" 
+for_vote_map: "要选择地图，请再次点击村民" 
+map_list: "地图:" 
+start: 
+info: "游戏开始!" 
+stop: 
+loose: "你输了!" 
+team: 
+destroyed: "团队 %s 的床已经被毁了!" 
+terminated: "团队 %s 被毁!" 
+win: "团队 %s 赢得了比赛!" 
+joined: "%s 加入您的团队" 
+quited: "%s 离开你的团队" 
+partners: "你的团队的队员: %s" 
+buy: 
+inv_full: "您的包已满!" 
+no_money: "你没有钱" 
+shop: "村民" 
+spawner: 
+title: 
+b: "青铜" 
+i: "铁" 
+g: "金" 
+sayall: 
+prefix: "*" 
+tosay: "在游戏中是团队聊天. 如果你想对公众说, 在消息前输入 %s." 
+bw: 
+usage: "/bw" 
+description: "将您传送到大堂" 
+permission: "你没有权限" 
+nouse: "你不能用在这里!" 
+bwvote: 
+usage: "/bwvote" 
+description: "投票强制启动" 
+permission: "你没有权限" 
+used: "您已投票!" 
+nouse: "你不能在这里使用这个命令!" 
+notime: "游戏已经运行!" 
+bwstart: 
+usage: "/bwstart" 
+description: "现在开始游戏" 
+permission: "您是非运营商" 
+notime: "已经运行!" 
+bwstop: 
+usage: "/bwstop" 
+description: "停止" 
+permission: "您是非运营商" 
+notime: "游戏成功停止!" 

@@ -95,9 +95,9 @@ spawners:
   g: 20
 teams:
  names:
-  white: "White"
-  orange: "Orange"
-  magenta: "Magenta"
+  white: "白"
+  orange: "橙"
+  magenta: "品红"
   lightBlue: "Light-Blue"
   yellow: "Yellow"
   lime: "Lime"
