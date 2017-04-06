@@ -140,7 +140,7 @@ class EventListener implements Listener {
 		$Level = $Player->getLevel();
 		if ((!$this->plugin->game) || ($this->plugin->game->level_name != $Level->getFolderName()))
 			return;
-		if $Player->getGamemode() == Player::SPECTATOR)
+		if ($Player->getGamemode() === Player::SPECTATOR)
 		return;
 		$event->setCancelled($this->plugin->game->PlayerMove($event->getPlayer(),$event->getFrom(),$event->getTo()));
 		$X = $Player->getFloorX();
