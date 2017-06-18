@@ -16,14 +16,14 @@ use pocketmine\inventory\ChestInventory;
 use pocketmine\inventory\CustomInventory;
 use pocketmine\inventory\InventoryType;
 use pocketmine\inventory\BaseTransaction;
-use pocketmine\nbt\tag\Byte;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Double;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Float
-use pocketmine\nbt\tag\Int; 
-use pocketmine\nbt\tag\Short;
-use pocketmine\nbt\tag\String; 
+use pocketmine\nbt\tag\ByteTag;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\IntTag; 
+use pocketmine\nbt\tag\ShortTag;
+use pocketmine\nbt\tag\StringTag; 
 use pocketmine\event\Listener; 
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
@@ -140,7 +140,7 @@ class EventListener implements Listener {
 		$Level = $Player->getLevel();
 		if ((!$this->plugin->game) || ($this->plugin->game->level_name != $Level->getFolderName()))
 			return;
-		if $Player->getGamemode() == Player::SPECTATOR)
+		if ($Player->getGamemode() === Player::SPECTATOR)
 		return;
 		$event->setCancelled($this->plugin->game->PlayerMove($event->getPlayer(),$event->getFrom(),$event->getTo()));
 		$X = $Player->getFloorX();
