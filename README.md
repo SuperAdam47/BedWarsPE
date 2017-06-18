@@ -1,3 +1,3 @@
 # BedWarsPE
 
-This is public BedWars plugin for pocketmine.
+New BedWars:https://github.com/NetherTechnology/BedWars
